@@ -35,8 +35,6 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]!
-    user(userId: ID!): User
     me: User
   }
 
@@ -47,9 +45,7 @@ const typeDefs = gql`
 
     saveBook(input: BookInput): User
 
-    removeUser(bookId: String!): User
-
-    removeBook(book: String!): User
+    removeBook(bookId: String!): User
   }
 
 `;
