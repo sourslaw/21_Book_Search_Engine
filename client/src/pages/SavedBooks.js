@@ -1,32 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 // Importing the `useQuery()` hook from Apollo Client
-import { useQuery } from '@apollo/client';
+// import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 // Importing the query we are going to execute from its file
-import { GET_ME } from '../utils/queries';
-
-import { useMutation } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
-  const [removeBook, { error, data }] = useMutation(REMOVE_BOOK);
 
-
-  const { userData }= useQuery(GET_ME);
-      // const [removeBook, { error, data }] = useMutation(REMOVE_BOOK);
-
-  // const { thoughtId } = useParams();
-  // const { loading, data } = useQuery(GET_ME, {
-  //   // pass URL parameter
-  //   variables: { thoughtId: thoughtId },
-  // });
+  const {loading, data} = useQuery(QUERY_ME);
+  const userData = data?.me || {};
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -38,16 +28,16 @@ const SavedBooks = () => {
 
     try {
       // const response = await deleteBook(bookId, token);
-      const { data } = await removeBook({
-        variables: { ...formState },
+      await removeBook({
+        variables: { bookId },
       });
 
-      if (!response.ok) {
+      if ( error ) {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
+      // const updatedUser = await response.json();
+      // setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
@@ -56,7 +46,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
