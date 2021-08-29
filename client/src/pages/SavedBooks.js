@@ -8,13 +8,13 @@ import { removeBookId } from '../utils/localStorage';
 // import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useQuery, useMutation } from '@apollo/client';
 // Importing the query we are going to execute from its file
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_SINGLE_USER } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 
 
 const SavedBooks = () => {
 
-  const {loading, data} = useQuery(QUERY_ME);
+  const {loading, data} = useQuery(QUERY_SINGLE_USER);
   const userData = data?.me || {};
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
