@@ -27,7 +27,7 @@
 
 ### Installation
 - The project is uploaded to [GitHub](https://github.com/) at the following repository: [here](https://github.com/sourslaw/21_Book_Search_Engine)
-<!-- - The project is deployed via [Heroku](https://www.heroku.com/) at the following link: [here](https://shrouded-chamber-26044.herokuapp.com/) -->
+- The project is deployed via [Heroku](https://www.heroku.com/) at the following link: [here](https://fast-bastion-34601.herokuapp.com/)
 
 
 ### Credits
